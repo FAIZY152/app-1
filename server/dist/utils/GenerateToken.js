@@ -20,11 +20,15 @@ const GenerateToken = (res, user) => __awaiter(void 0, void 0, void 0, function*
             expiresIn: "1d",
         });
         if (res) {
+            // Set cookie with appropriate settings for cross-origin
             res.cookie("token", token, {
                 httpOnly: true,
-                sameSite: "strict",
-                maxAge: 24 * 60 * 60 * 1000,
+                secure: process.env.NODE_ENV === 'production', // true in production
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                maxAge: 24 * 60 * 60 * 1000, // 1 day
             });
+            // Also return token in response for client storage
+            return { token };
         }
         return token;
     }

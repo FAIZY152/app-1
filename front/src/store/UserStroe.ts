@@ -10,9 +10,18 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+// If you're using tokens in Authorization header:
+axios.interceptors.request.use(function (config) {
+  const token = localStorage.getItem('token'); // or however you store your token
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const API_ENDPOINT = `${API_URL}/api/v1/auth`;
-axios.defaults.withCredentials = true;
 
 export const UserStore = create<UserState>()(
   persist(

@@ -19,27 +19,27 @@ const IsAuthenticated = async (
   next: NextFunction
 ): Promise<any> => {
   try {
-    let token = req.cookies.token;
-    if (!token)
+    // Check both cookie and Authorization header
+    let token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
       return res
         .status(401)
         .json({ error: "User is Not Authenticated", success: false });
+    }
 
     const jwtToken = process.env.JWT_TOKEN;
     if (!jwtToken) {
       throw new Error("JWT token is not defined");
     }
 
-    // verify the token with decode
     const decode = (await jwt.verify(token, jwtToken)) as jwt.JwtPayload;
-
     if (!decode) {
       return res
         .status(401)
         .json({ error: "User is Not Authenticated", success: false });
     }
     req.id = decode.userid;
-
     next();
   } catch (error) {
     return res

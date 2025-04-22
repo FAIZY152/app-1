@@ -18,17 +18,19 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const UserSchema_1 = __importDefault(require("../models/UserSchema"));
 dotenv_1.default.config();
 const IsAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        let token = req.cookies.token;
-        if (!token)
+        // Check both cookie and Authorization header
+        let token = req.cookies.token || ((_a = req.header('Authorization')) === null || _a === void 0 ? void 0 : _a.replace('Bearer ', ''));
+        if (!token) {
             return res
                 .status(401)
                 .json({ error: "User is Not Authenticated", success: false });
+        }
         const jwtToken = process.env.JWT_TOKEN;
         if (!jwtToken) {
             throw new Error("JWT token is not defined");
         }
-        // verify the token with decode
         const decode = (yield jsonwebtoken_1.default.verify(token, jwtToken));
         if (!decode) {
             return res
