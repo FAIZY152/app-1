@@ -10,7 +10,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 dotenv.config();
-
 connectDB();
 
 const app = express();
