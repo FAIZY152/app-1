@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://app-1-production-37ee.up.railway.app",
     credentials: true,
   })
 );
