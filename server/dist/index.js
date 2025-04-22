@@ -24,9 +24,8 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 const allowedOrigins = [
-    'http://localhost:5173', // Your local frontend
-    'http://localhost:5401', // Your local backend
-    'https://app-1-production-37ee.up.railway.app', // Your production frontend
+    // Your local backend
+    "https://app-1-production-37ee.up.railway.app", // Your production frontend
     // Add any other origins you need
 ];
 app.use((0, cors_1.default)({
@@ -35,17 +34,17 @@ app.use((0, cors_1.default)({
         if (!origin)
             return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
-            return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
+            return callback(new Error("The CORS policy for this site does not allow access from the specified Origin."), false);
         }
         return callback(null, true);
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
 }));
 // Add these headers to all responses
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
 app.use("/api/v1/auth", UserRoute_1.default);
