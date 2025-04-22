@@ -23,21 +23,8 @@ app.use(body_parser_1.default.json({ limit: "10mb" })); // Parses JSON requests
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
-const allowedOrigins = [
-    // Your local backend
-    "https://app-1-production-37ee.up.railway.app", // Your production frontend
-    // Add any other origins you need
-];
 app.use((0, cors_1.default)({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin)
-            return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            return callback(new Error("The CORS policy for this site does not allow access from the specified Origin."), false);
-        }
-        return callback(null, true);
-    },
+    origin: "https://app-1-production-37ee.up.railway.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
