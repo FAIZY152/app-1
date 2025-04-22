@@ -24,7 +24,7 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: "http://localhost:5173",
+    origin: "https://app-1-production-37ee.up.railway.app",
     credentials: true,
 }));
 app.use("/api/v1/auth", UserRoute_1.default);
