@@ -32,7 +32,6 @@ resturentRoute.get("/get-resturent", IsAuthenticated, GetResturent);
 
 resturentRoute.get(
   "/resturents/:resturenId",
-  IsAuthenticated,
   GetSingleResturent
 );
 resturentRoute.put(
